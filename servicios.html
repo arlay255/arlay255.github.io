@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pago de Servicios | LoboBuap</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .search-bar {
+            position: relative; margin-bottom: 30px;
+        }
+        .search-bar input {
+            width: 100%; padding: 15px 15px 15px 50px; border: 1px solid #ddd; border-radius: 30px; font-size: 1rem; outline: none; transition: all 0.3s;
+        }
+        .search-bar input:focus { border-color: var(--action-blue); box-shadow: 0 0 0 4px rgba(25, 115, 184, 0.1); }
+        .search-bar i {
+            position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #999;
+        }
+
+        .services-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px;
+        }
+        .service-item {
+            background: white; border: 1px solid #eee; border-radius: 16px; padding: 25px 15px; text-align: center; cursor: pointer; transition: all 0.3s ease;
+        }
+        .service-item:hover {
+            border-color: var(--action-blue); box-shadow: 0 10px 20px -5px rgba(25, 115, 184, 0.15); transform: translateY(-3px);
+        }
+        .service-icon {
+            width: 60px; height: 60px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.8rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">LoboBuap <span>| Servicios</span></div>
+        <a href="dashboard.html" class="btn-back"><i class="fas fa-arrow-left"></i> Volver</a>
+    </header>
+
+    <div class="container" style="max-width: 900px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1>Pago de Servicios</h1>
+            <p>Paga tu luz, agua, internet y colegiaturas universitarias sin comisiones.</p>
+        </div>
+
+        <div class="card">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar servicio (ej. CFE, BUAP...)">
+            </div>
+
+            <h3 style="color: var(--primary-dark); margin-bottom: 20px;">Más populares</h3>
+            
+            <div class="services-grid">
+                <div class="service-item" onclick="alert('Simulación: Ir a pagar CFE')">
+                    <div class="service-icon" style="background: #e0f2fe; color: #0284c7;">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <strong style="color: var(--primary-dark);">CFE</strong>
+                </div>
+                <div class="service-item" onclick="alert('Simulación: Ir a pagar Internet')">
+                    <div class="service-icon" style="background: #fee2e2; color: #dc2626;">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <strong style="color: var(--primary-dark);">Telmex / Infinitum</strong>
+                </div>
+                <div class="service-item" onclick="alert('Simulación: Ir a pagar Agua')">
+                    <div class="service-icon" style="background: #dcfce7; color: #16a34a;">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <strong style="color: var(--primary-dark);">Agua de Puebla</strong>
+                </div>
+                <div class="service-item" onclick="alert('Simulación: Ir a pagar BUAP')">
+                    <div class="service-icon" style="background: var(--primary-blue); color: white;">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <strong style="color: var(--primary-dark);">Tesorería BUAP</strong>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon" style="background: #f3f4f6; color: #6b7280;">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <strong style="color: var(--text-secondary);">Otros</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

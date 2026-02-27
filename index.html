@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoboBuap | Tu Universidad, Tu Banco</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           VARIABLES Y RESET (CSS3)
+           ========================================= */
+        :root {
+            /* Paleta de Colores basada en BBVA/Prompt */
+            --primary-blue: #072146;   /* Azul Oscuro Corporativo */
+            --action-blue: #1973B8;    /* Azul Brillante (Botones) */
+            --action-hover: #145c94;   /* Hover para botones */
+            --secondary-bg: #F4F4F4;   /* Gris muy claro de fondo */
+            --white: #FFFFFF;
+            --text-dark: #121212;
+            --text-gray: #666666;
+            --shadow-card: 0 4px 12px rgba(0,0,0,0.1); /* Sombra suave estilo tarjeta */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--secondary-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* =========================================
+           HEADER / NAVEGACIÓN
+           ========================================= */
+        .main-header {
+            background-color: var(--white);
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            letter-spacing: -0.5px;
+        }
+
+        /* Navegación Desktop */
+        .nav-links {
+            display: none; /* Oculto en móvil por defecto */
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: var(--primary-blue);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--action-blue);
+        }
+
+        /* Botones de Acción Header */
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-client {
+            background-color: var(--action-blue);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 4px; /* Borde sutil, no totalmente redondo */
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .btn-client:hover {
+            background-color: var(--action-hover);
+        }
+
+        .btn-access {
+            border: 1px solid var(--action-blue);
+            color: var(--action-blue);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            background: transparent;
+        }
+
+        .btn-access:hover {
+            background-color: rgba(25, 115, 184, 0.05);
+        }
+
+        /* =========================================
+           HERO SECTION (Principal)
+           ========================================= */
+        .hero {
+            flex: 1; /* Empuja el footer hacia abajo */
+            display: flex;
+            flex-direction: column;
+            padding: 40px 5%;
+            background: linear-gradient(135deg, #eef2f5 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            max-width: 450px;
+        }
+
+        /* COMPONENTE DE ACCESO (Login UI) */
+        .login-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow-card); /* Sombra solicitada */
+            width: 100%;
+            max-width: 400px;
+            margin-top: 30px;
+            border-top: 4px solid var(--primary-blue); /* Detalle estético superior */
+        }
+
+        .login-header {
+            margin-bottom: 20px;
+        }
+
+        .login-header h3 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--action-blue);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--action-blue);
+            box-shadow: 0 0 0 3px rgba(25, 115, 184, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: var(--primary-blue); /* Botón oscuro para contraste */
+            color: var(--white);
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: #051936;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: var(--action-blue);
+        }
+
+        /* =========================================
+           FOOTER
+           ========================================= */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 50px 5% 20px;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: #dcdcdc;
+            font-size: 0.9rem;
+        }
+
+        .footer-col a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        /* Estilo especial para el PDF */
+        .pdf-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 15px;
+            border-radius: 4px;
+            color: var(--white) !important;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .pdf-link:hover {
+            background: rgba(255,255,255,0.2);
+            text-decoration: none !important;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* =========================================
+           MEDIA QUERIES (Responsive)
+           ========================================= */
+        @media (min-width: 768px) {
+            /* Navegación visible en tablet/desktop */
+            .nav-links {
+                display: flex;
+            }
+
+            .main-header {
+                padding: 0 8%;
+            }
+
+            /* Layout Hero: Texto izquierda, Login derecha */
+            .hero {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 60px 8%;
+                background: url('https://img.freepik.com/free-photo/university-student-campus_23-2148166542.jpg?w=1380&t=st=1685380000~exp=1685380600~hmac=fakeurl') no-repeat center center/cover;
+                /* Nota: Usamos un overlay para que el texto sea legible sobre la imagen */
+            }
+            
+            /* Overlay para oscurecer/aclarar fondo si hay imagen */
+            .hero::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, rgba(255,255,255,0.95) 30%, rgba(255,255,255,0.6) 100%);
+                z-index: 1;
+            }
+
+            .hero-content {
+                width: 50%;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .login-card {
+                width: 380px;
+                margin-top: 0;
+                z-index: 2;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">LoboBuap</div>
+        
+        <nav>
+            
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="btn-client" onclick="window.location.href='costos.html'">Hazte Cliente</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="features" style="background: var(--primary-blue); color: white; padding: 10px; text-align: center; font-size: 0.9rem;">
+            <p><i class="fas fa-shield-alt"></i> Seguridad avanzada en todas tus transacciones universitarias.</p>
+        </section>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Tu universidad,<br>tu banco.</h1>
+                <p>Gestiona tus becas, pagos de colegiatura y ahorros con la seguridad que te respalda. Exclusivo para la comunidad BUAP.</p>
+            </div>
+
+            <div class="login-card">
+                <div class="login-header">
+                    <h3>¡Bienvenido!</h3>
+                </div>
+                <form onsubmit="event.preventDefault();">
+                    <div class="input-group">
+                        <label for="card-number">Número de Tarjeta</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="card-number" placeholder="Ej. 1234 5678" required>
+                            <i class="far fa-credit-card"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="password">Contraseña</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" placeholder="••••••••" required>
+                            <i class="fas fa-eye-slash" style="cursor: pointer;"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-login" onclick="window.location.href='dashboard.html'">Entrar</button>
+                    <a href="recuperar-password.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>LoboBuap</h4>
+                <ul>
+                    <li><a href="quienes-somos.html">quienes-somos</a></li>
+                    <li><a href="sostenibilidad.html">Sostenibilidad</a></li>
+                    <li><a href="bolsa-trabajo.html">Bolsa de trabajo</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Atención al Cliente</h4>
+                <ul>
+                    <li><a href="centro-ayuda.html">Centro de Ayuda</a></li>
+                    <li><a href="seguridad.html">seguridad.html</a></li>
+                    <li><a href="sucursales.html">Sucursales y Cajeros</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legales</h4>
+                <ul>
+                    <li><a href="aviso-legal.html">Aviso Legal</a></li>
+                </ul>
+            </div>
+            
+        <div class="copyright">
+            &copy; 2024 LoboBuap S.A. Institución de Banca Universitaria. Todos los derechos reservados.
+        </div>
+    </footer>
+
+</body>
+</html>

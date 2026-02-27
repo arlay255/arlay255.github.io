@@ -1,0 +1,213 @@
+/* =========================================
+   LoboBuap Design System v2.0
+   ========================================= */
+:root {
+    /* Paleta Corporativa */
+    --primary-blue: #004481;      /* Azul Profundo BBVA */
+    --primary-dark: #022a52;      /* Azul Noche */
+    --action-blue: #1973B8;       /* Azul Interacción */
+    --accent-cyan: #2DCCCD;       /* Cian para detalles */
+    
+    /* Paleta Funcional */
+    --bg-body: #F4F6F9;           /* Gris azulado muy suave */
+    --surface-white: #FFFFFF;
+    --text-main: #121212;
+    --text-secondary: #5E6D7E;
+    
+    /* Estados */
+    --success: #2da85c;
+    --danger: #d12d2d;
+    
+    /* Efectos */
+    --shadow-soft: 0 10px 30px -10px rgba(7, 33, 70, 0.1);
+    --shadow-hover: 0 20px 40px -10px rgba(7, 33, 70, 0.15);
+    --radius-card: 16px;
+    --radius-btn: 8px;
+}
+
+body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a { text-decoration: none; color: inherit; transition: all 0.2s ease; }
+ul { list-style: none; padding: 0; margin: 0; }
+
+/* HEADER MEJORADO */
+.main-header {
+    background: var(--surface-white);
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--primary-blue);
+    letter-spacing: -0.5px;
+}
+
+.logo span { font-weight: 300; color: var(--text-secondary); }
+
+/* CONTENEDORES Y TARJETAS */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+.card {
+    background: var(--surface-white);
+    padding: 35px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(255,255,255,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+/* TIPOGRAFÍA */
+h1 { font-size: 2rem; color: var(--primary-blue); margin-bottom: 10px; }
+h2 { font-size: 1.5rem; color: var(--primary-dark); margin-bottom: 25px; font-weight: 600; }
+p { color: var(--text-secondary); line-height: 1.6; }
+
+/* TABLAS ESTÉTICAS */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; }
+
+th {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 16px;
+    text-align: left;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+td { padding: 16px; border-bottom: 1px solid #eee; color: var(--text-secondary); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background-color: #f8faff; color: var(--primary-blue); font-weight: 500; }
+
+/* BOTONES */
+.btn-primary {
+    background: var(--action-blue);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius-btn);
+    font-weight: 500;
+    display: inline-block;
+}
+
+.btn-primary:hover { background: var(--primary-blue); box-shadow: 0 4px 12px rgba(25, 115, 184, 0.3); }
+
+.btn-back {
+    color: var(--primary-blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: var(--radius-btn);
+    background: rgba(25, 115, 184, 0.1);
+}
+
+.btn-back:hover { background: rgba(25, 115, 184, 0.2); }
+
+/* DASHBOARD ESPECÍFICO */
+.dashboard-grid { display: grid; grid-template-columns: 280px 1fr; gap: 30px; }
+
+/* Sidebar Menú */
+.sidebar {
+    background: var(--surface-white);
+    padding: 20px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    height: fit-content;
+}
+
+.sidebar li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.sidebar li a:hover, .sidebar li a.active {
+    background-color: #E8F1FA;
+    color: var(--primary-blue);
+}
+
+.sidebar li a i { width: 20px; text-align: center; }
+
+/* Tarjeta de Saldo (Estilo Credit Card) */
+.balance-card {
+    background: linear-gradient(135deg, #004481 0%, #002a52 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px -5px rgba(0, 68, 129, 0.4);
+}
+
+/* Círculos decorativos fondo tarjeta */
+.balance-card::before {
+    content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px;
+    background: rgba(255,255,255,0.1); border-radius: 50%;
+}
+.balance-card::after {
+    content: ''; position: absolute; bottom: -30px; left: -30px; width: 140px; height: 140px;
+    background: rgba(255,255,255,0.05); border-radius: 50%;
+}
+
+.movement-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 0; border-bottom: 1px solid #f0f0f0;
+}
+.movement-item:last-child { border: none; }
+.icon-circle {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-right: 15px;
+}
+.bg-red-light { background: #fee2e2; color: #dc2626; }
+.bg-green-light { background: #dcfce7; color: #16a34a; }
+.bg-blue-light { background: #e0f2fe; color: #0284c7; }
+
+.amount { font-weight: 700; font-size: 1rem; }
+.amount.negative { color: #dc2626; }
+.amount.positive { color: #16a34a; }
+
+/* FOOTER */
+footer {
+    background: var(--primary-blue);
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+.footer-links a { color: rgba(255,255,255,0.7); margin: 0 15px; }
+.footer-links a:hover { color: white; }

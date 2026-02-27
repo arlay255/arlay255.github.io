@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobo-Rent Corporativo | LoboBuap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta Light Mode Ejecutivo */
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --primary-blue: #072146;   /* Azul Corporativo */
+            --action-blue: #1973B8;    /* Azul Interactivo */
+            --accent-cyan: #06b6d4;
+            --danger-red: #ef4444;
+            --warning-amber: #f59e0b;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --glass-border: 1px solid rgba(7, 33, 70, 0.08);
+            --card-shadow: 0 10px 30px rgba(7, 33, 70, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            background-image: radial-gradient(circle at 10% 20%, rgba(25, 115, 184, 0.03) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        .main-header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: var(--glass-border);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-blue); }
+        .logo span { color: var(--action-blue); font-weight: 300; }
+
+        .btn-back {
+            color: var(--primary-blue); text-decoration: none; font-weight: 600;
+            padding: 8px 15px; background: rgba(7, 33, 70, 0.05);
+            border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+        .btn-back:hover { background: rgba(7, 33, 70, 0.1); }
+
+        /* --- HERO SECTION --- */
+        .rent-hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+        }
+
+        .tag-dignity {
+            background: rgba(25, 115, 184, 0.1);
+            color: var(--action-blue);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(25, 115, 184, 0.2);
+            display: inline-block;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .rent-hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .rent-hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- GRID DE SERVICIOS --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: var(--card-shadow);
+            border: var(--glass-border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(7, 33, 70, 0.08);
+            border-top-color: var(--action-blue);
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .service-icon {
+            font-size: 2.2rem;
+            color: var(--action-blue);
+            background: rgba(25, 115, 184, 0.05);
+            width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 16px;
+        }
+
+        .price-tag {
+            font-weight: 800;
+            color: var(--primary-blue);
+            background: var(--bg-light);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            border: 1px dashed rgba(7, 33, 70, 0.15);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .btn-rent {
+            width: 100%;
+            padding: 14px;
+            background: var(--white);
+            border: 2px solid var(--action-blue);
+            color: var(--action-blue);
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-rent:hover {
+            background: var(--action-blue);
+            color: var(--white);
+            box-shadow: 0 10px 20px rgba(25, 115, 184, 0.2);
+        }
+
+        /* --- SECCIÓN CORPORATIVA (BASE DE DATOS) --- */
+        .corporate-data {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: var(--card-shadow);
+            border: var(--glass-border);
+        }
+
+        .corporate-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .corporate-header h2 {
+            color: var(--primary-blue);
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .data-list h3 {
+            color: var(--action-blue);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 10px;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .data-row:hover {
+            background: var(--bg-light);
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 8px;
+        }
+
+        .badge-status {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-danger { background: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
+        .status-warning { background: rgba(245, 158, 11, 0.1); color: var(--warning-amber); }
+        .status-success { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+
+        @media (max-width: 768px) {
+            .data-grid { grid-template-columns: 1fr; }
+            .corporate-data { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">LoboBuap <span>| Human Capital</span></div>
+        <a href="dashboard.html" class="btn-back"><i class="fas fa-arrow-left"></i> Panel Principal</a>
+    </header>
+
+    <div class="rent-hero">
+        <span class="tag-dignity"><i class="fas fa-handshake"></i> Externalización de Vergüenzas</span>
+        <h1>Alquila un Universitario</h1>
+        <p>
+            ¿Necesitas a alguien para sufrir por ti? Soluciona tus problemas sociales y logísticos alquilando a nuestros estudiantes. Están tan endeudados que harán (casi) cualquier cosa por una torta de milanesa y un refresco.
+        </p>
+    </div>
+
+    <div class="container">
+        
+        <div class="services-grid">
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon"><i class="fas fa-heart-broken"></i></div>
+                    <div class="price-tag">$200 MXN / hr</div>
+                </div>
+                <h3>Falso Novio/a (RP Familiar)</h3>
+                <p>
+                    ¿Tu tía sigue preguntando "¿y la novia mijo?" en las cenas? Alquila a un estudiante de la Facultad de Artes. 
+                    Incluye: Tomarse de la mano, reírse de los chistes malos de tu papá y fingir estabilidad emocional y económica.
+                </p>
+                <button class="btn-rent" onclick="alert('Catálogo de estudiantes de Artes enviado a tu correo corporativo.')">
+                    <i class="fas fa-user-check"></i> Ver Catálogo
+                </button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon"><i class="fas fa-sun"></i></div>
+                    <div class="price-tag">$50 MXN / trámite</div>
+                </div>
+                <h3>Especialista en Filas (DAAE)</h3>
+                <p>
+                    No pierdas tu valioso tiempo en Servicios Escolares. Un estudiante de primer semestre de Ingeniería se parará bajo el sol intenso por ti durante 4 horas. 
+                    <br><small style="color: var(--danger-red);">*No incluye gastos médicos por insolación.</small>
+                </p>
+                <button class="btn-rent" onclick="alert('Estudiante asignado. Está haciendo fila desde las 4:00 AM.')">
+                    <i class="fas fa-walking"></i> Contratar Fila
+                </button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="price-tag">Una Maruchan</div>
+                </div>
+                <h3>Escudo Humano STU</h3>
+                <p>
+                    ¿Tienes miedo de caminar solo por la parada del Lobobus de noche? Alquila a un compañero de Ingeniería Civil. En caso de asalto, él está entrenado para entregar su celular Alcatel primero, dándote tiempo para huir.
+                </p>
+                <button class="btn-rent" onclick="alert('Consultor de seguridad táctica desplegado en tu ubicación.')">
+                    <i class="fas fa-shield-virus"></i> Solicitar Protección
+                </button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon"><i class="fas fa-user-secret"></i></div>
+                    <div class="price-tag">$150 MXN</div>
+                </div>
+                <h3>Agente "Espantaviejas 3000"</h3>
+                <p>
+                    ¿Alguien te coquetea y no te interesa? Desplegamos a un estudiante de Ciencias de la Computación para que le hable sobre Linux, Criptomonedas y lore de League of Legends hasta que la persona huya desesperada.
+                </p>
+                <button class="btn-rent" onclick="alert('Agente friki en camino. Preparando monólogo sobre el Imperio Romano...')">
+                    <i class="fas fa-biohazard"></i> Desplegar Agente
+                </button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon"><i class="fas fa-user-secret"></i></div>
+                    <div class="price-tag">$1500 MXN / hr</div>
+                </div>
+                <h3>prostitucion"</h3>
+                <p>
+                    te falta dinero y tienes tiempo libre por las noches, ponte un vestido y una pelica y pone en la esquina del 5 de mayo y veras como lega los clientes 
+                </p>
+                <button class="btn-rent" onclick="alert('vete lubricando tal vez no podras caminar bien por unos dias')">
+                    <i class="fas fa-biohazard"></i> ponte en la esquina
+                </button>
+            </div>
+
+        </div>
+
+        <div class="corporate-data">
+            <div class="corporate-header">
+                <h2>Directorio Logístico de Operaciones</h2>
+                <p style="color: var(--text-muted);">Zonas de alto rendimiento y principales accionistas de nuestro servicio.</p>
+            </div>
+
+            <div class="data-grid">
+                
+                <div class="data-list">
+                    <h3><i class="fas fa-map-marker-alt"></i> Puntos de Encuentro Aprobados</h3>
+                    <div class="data-row">
+                        <span>Pasillo de la Muerte (Ingeniería)</span>
+                        <span class="badge-status status-danger">Zona de Guerra</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Jardín de las Ardillas</span>
+                        <span class="badge-status status-success">Discreto</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Parada Lobobus (San Claudio)</span>
+                        <span class="badge-status status-danger">Riesgo Alto</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Arena BUAP (Detrás de gradas)</span>
+                        <span class="badge-status status-warning">Alta Demanda</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Biblioteca Central (Piso 3)</span>
+                        <span class="badge-status status-success">Silencioso</span>
+                    </div>
+                </div>
+
+                <div class="data-list">
+                    <h3><i class="fas fa-star"></i> Cartera de Clientes VIP</h3>
+                    <div class="data-row">
+                        <span>La Tía Chismosa</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Demanda "Novios" falsos</span>
+                    </div>
+                    <div class="data-row">
+                        <span>El Profe "Barco"</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Subcontrata quien le califique</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Señora de las Copias</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Pide guardaespaldas para el cambio</span>
+                    </div>
+                    <div class="data-row">
+                        <span>El Coordinador</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Exige almas jóvenes</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Alumno Foráneo</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Solo pide tuppers con comida</span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <p style="text-align: center; color: var(--text-muted); margin-top: 40px; font-size: 0.8rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px;">
+                *Cláusula Legal: LoboBuap Inc. no se hace responsable si el estudiante alquilado llora por estrés académico durante la prestación del servicio.
+            </p>
+        </div>
+
+    </div>
+
+    <footer>
+        <h3 style="color: var(--primary-blue); margin-bottom: 5px;">LoboBuap <span style="color: var(--action-blue);">Human Capital</span></h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026. Explotación laboral con estética corporativa.</p>
+    </footer>
+
+</body>
+</html>

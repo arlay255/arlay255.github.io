@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolsa de Trabajo | LoboBuap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta Corporativa Premium */
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --primary-blue: #072146;   /* Azul Corporativo Profundo */
+            --action-blue: #1973B8;    /* Azul de Botones */
+            --accent-cyan: #06b6d4;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --glass-border: 1px solid rgba(7, 33, 70, 0.08);
+            --card-shadow: 0 10px 30px rgba(7, 33, 70, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            background-image: radial-gradient(circle at 50% 0%, rgba(25, 115, 184, 0.05) 0%, transparent 50%);
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        .main-header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: var(--glass-border);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-blue); }
+        .logo span { color: var(--action-blue); font-weight: 300; }
+
+        .btn-back {
+            color: var(--primary-blue); text-decoration: none; font-weight: 600;
+            padding: 8px 15px; background: rgba(7, 33, 70, 0.05);
+            border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+        .btn-back:hover { background: rgba(7, 33, 70, 0.1); }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .job-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .job-header span {
+            display: inline-block;
+            color: var(--action-blue);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            background: rgba(25, 115, 184, 0.1);
+            padding: 5px 15px;
+            border-radius: 50px;
+        }
+
+        .job-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        /* --- GRID DE VACANTES --- */
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .job-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: var(--card-shadow);
+            border: var(--glass-border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Decoración superior de la tarjeta */
+        .job-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--action-blue), var(--accent-cyan));
+            opacity: 0; transition: 0.4s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(7, 33, 70, 0.1);
+            border-color: rgba(25, 115, 184, 0.2);
+        }
+
+        .job-card:hover::before { opacity: 1; }
+
+        /* Icono de fondo (Marca de agua) */
+        .icon-overlay {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 7rem;
+            opacity: 0.03;
+            color: var(--primary-blue);
+            transform: rotate(15deg);
+            transition: 0.4s ease;
+        }
+
+        .job-card:hover .icon-overlay {
+            transform: rotate(0deg) scale(1.1);
+            opacity: 0.05;
+        }
+
+        /* Etiquetas (Tags) */
+        .job-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-high { background: #fee2e2; color: #dc2626; border: 1px solid #f87171; }
+        .tag-med  { background: #fef3c7; color: #d97706; border: 1px solid #fbbf24; }
+        .tag-chill { background: #dcfce7; color: #166534; border: 1px solid #4ade80; }
+
+        /* Textos de la vacante */
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .job-location {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .salary {
+            font-weight: 700;
+            color: var(--action-blue);
+            background: rgba(25, 115, 184, 0.05);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px dashed rgba(25, 115, 184, 0.2);
+        }
+
+        .job-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Botón Postularse */
+        .btn-apply {
+            width: 100%;
+            padding: 12px;
+            background: var(--white);
+            border: 2px solid var(--action-blue);
+            color: var(--action-blue);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-apply:hover {
+            background: linear-gradient(90deg, var(--action-blue), var(--accent-cyan));
+            color: var(--white);
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(25, 115, 184, 0.2);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: var(--glass-border);
+            margin-top: 50px;
+            background: var(--white);
+        }
+
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">LoboBuap <span>| Careers</span></div>
+        <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Panel Principal</a>
+    </header>
+
+    <div class="container">
+        <div class="job-header">
+            <span>Únete a la Élite Financiera</span>
+            <h1>Vacantes Corporativas</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                Oportunidades laborales de "alto impacto" diseñadas para explotar tu talento en el ecosistema universitario.
+            </p>
+        </div>
+
+        <div class="job-grid">
+
+            <div class="job-card">
+                <i class="fas fa-bicycle icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-high"><i class="fas fa-fire"></i> Contratación Inmediata</span>
+                    <h3 class="job-title"> Taquero de tacos Canasta</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Facultad de Ingeniería</div>
+                    <p class="job-desc">
+                        Buscamos experto en logística de dos ruedas (Tacos de Canasta). Indispensable dominio de la "Salsa Verde que pica rico" y habilidad para gritar a 80 decibeles.
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> Comisión por taco + Refresco ilimitado
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('¡Solicitud enviada! Prepara la bicicleta.')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="job-card">
+                <i class="fas fa-bus icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-high"><i class="fas fa-exclamation-triangle"></i> Alto Riesgo</span>
+                    <h3 class="job-title">Operador de Unidad Táctica (STU)</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Ruta Periférico - CU</div>
+                    <p class="job-desc">
+                        Requisitos: Licencia de piloto de Fórmula 1 (deseable), excelente gusto musical (cumbias obligatorias) y habilidad neuro-motora para cobrar y manejar simultáneamente.
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> Lo que junte el chalán
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('¡Súbale, súbale! Hay lugares atrás.')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="job-card">
+                <i class="fas fa-music icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-chill"><i class="fas fa-clock"></i> Medio Tiempo</span>
+                    <h3 class="job-title">Botarga Dr. Simi</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Farmacias cerca de CU</div>
+                    <p class="job-desc">
+                        ¿Tienes ritmo? Buscamos talento con resistencia a altas temperaturas (Botarga Dr. Simi) y rodillas de acero para bailar reguetón 6 horas seguidas en la banqueta.
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> Pago emocional + Hidratación
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('¡Lo mismo pero más barato!')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="job-card">
+                <i class="fas fa-chair icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-med"><i class="fas fa-calendar-alt"></i> Estratégico</span>
+                    <h3 class="job-title">Gerente de Espacios Estratégicos</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Biblioteca Central</div>
+                    <p class="job-desc">
+                        Tu misión: Colocar mochilas estratégicamente en mesas vacías y defenderlas con tu vida de otros alumnos mientras tus amigos van a desayunar con tranquilidad.
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> Un sándwich del OXXO
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('Lugar apartado exitosamente. ¡Defiéndelo!')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+             <div class="job-card">
+                <i class="fas fa-candy-cane icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-chill"><i class="fas fa-briefcase"></i> Freelance</span>
+                    <h3 class="job-title">Distribuidor de Glucosa "El Mochilas"</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Salones al azar (CU)</div>
+                    <p class="job-desc">
+                        Se requiere habilidad táctica para entrar sigilosamente a clases en curso, susurrar "vendo mazapanes" a la última fila y salir sin que el profesor se dé cuenta.
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> Ganancias libres de impuestos (SAT)
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('¿De a cómo el mazapán, joven?')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="job-card">
+                <i class="fas fa-theater-masks icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-med"><i class="fas fa-sad-tear"></i> Fin de Semestre</span>
+                    <h3 class="job-title">Actor Dramático de Negociación</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Cubículos de Profesores</div>
+                    <p class="job-desc">
+                        Buscamos talento actoral capaz de producir lágrimas reales. Deberás contarle historias tristes a los profesores para convencerlos de redondear ese 5.9 a 6.0.
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> Mantener la beca un semestre más
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('Prepárate para llorar en 3, 2, 1...')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="job-card">
+                <i class="fas fa-user-ninja icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-high"><i class="fas fa-clock"></i> Urgente (7:00 AM)</span>
+                    <h3 class="job-title">Especialista en Suplantación de Identidad</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Salones de primer piso</div>
+                    <p class="job-desc">
+                        ¿Tienes buen control vocal? Tu trabajo será gritar "¡Presente!" cambiando la voz en 5 tonos diferentes para cubrir las faltas de tus amigos que siguen dormidos.
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> Un café del OXXO por amigo salvado
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('¡Presente! Digo... solicitud enviada.')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="job-card">
+                <i class="fas fa-paint-brush icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-chill"><i class="fas fa-laptop-code"></i> Trabajo Remoto</span>
+                    <h3 class="job-title">Ingeniero Senior en Transiciones de Canva</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> En la cafetería</div>
+                    <p class="job-desc">
+                        Buscamos al que no hizo nada en el proyecto. Tu única responsabilidad será elegir la plantilla bonita y ponerle transición de "Barrido" a todo, 5 minutos antes de exponer.
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> Tu nombre en la portada del trabajo
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('Añadiendo animación de rebote a tu currículum...')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="job-card">
+                <i class="fas fa-file-signature icon-overlay"></i>
+                <div>
+                    <span class="job-tag tag-high"><i class="fas fa-skull"></i> Misión Imposible</span>
+                    <h3 class="job-title">cargador de mochila</h3>
+                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> emma4</div>
+                    <p class="job-desc">
+                        "carga tu mochila hasta dondeeste tu salon no inporta cuantas mochilas les des el podra con todas".
+                    </p>
+                    <div class="salary">
+                        <i class="fas fa-coins"></i> El privilegio de no darte de baja
+                    </div>
+                </div>
+                <button class="btn-apply" onclick="alert('Falta una copia de tu solicitud. Vuelve mañana.')">
+                    Postularme Ahora <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <h3 style="color: var(--primary-blue); margin-bottom: 5px;">LoboBuap <span style="color: var(--action-blue);">Careers</span></h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026. Donde tu talento no es valorado, pero sí explotado de forma corporativa.</p>
+    </footer>
+</body>
+</html>

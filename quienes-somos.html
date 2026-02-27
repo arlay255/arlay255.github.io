@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos | LoboBuap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        :root {
+            /* Paleta Light Mode Premium */
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --primary-blue: #072146;   /* Azul BBVA */
+            --action-blue: #1973B8;
+            --accent-cyan: #06b6d4;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --card-shadow: 0 10px 30px rgba(7, 33, 70, 0.08);
+            --glass-border: 1px solid rgba(7, 33, 70, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(25, 115, 184, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 40%);
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER Y HERO --- */
+        .main-header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: var(--glass-border);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .hero-corporate {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+        }
+
+        .uni-logo-glow {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(25, 115, 184, 0.2);
+            border: 3px solid white;
+            background: white;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .title-main {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        /* --- HISTORIA (TIMELINE) --- */
+        .history-panel {
+            background: var(--bg-white);
+            border: var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-top: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .timeline {
+            border-left: 3px solid var(--action-blue);
+            padding-left: 30px;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: ''; position: absolute; left: -39px; top: 5px;
+            width: 15px; height: 15px; border-radius: 50%;
+            background: var(--bg-white);
+            border: 4px solid var(--action-blue);
+            box-shadow: 0 0 10px rgba(25, 115, 184, 0.3);
+        }
+
+        /* --- FUNDADORES --- */
+        .founders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .founder-card {
+            background: var(--bg-white);
+            border: var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .founder-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-cyan));
+            transform: scaleX(0); transition: transform 0.4s ease;
+        }
+
+        .founder-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(7, 33, 70, 0.15);
+        }
+
+        .founder-card:hover::before { transform: scaleX(1); }
+
+        .founder-img-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .founder-img-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .founder-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--bg-white);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        /* Anillos decorativos detrás de las fotos (Azules suaves) */
+        .founder-img-wrapper::after {
+            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--action-blue), var(--accent-cyan));
+            z-index: 1;
+            animation: spin 5s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .founder-role {
+            display: inline-block;
+            background: rgba(25, 115, 184, 0.1);
+            color: var(--action-blue);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        /* --- MISIÓN & VISIÓN --- */
+        .mv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .mv-card {
+            background: var(--bg-light);
+            border: var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+
+        .mv-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+        }
+
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary-blue);">LoboBuap <span style="color: var(--action-blue);">| Verdad</span></div>
+        <a href="index.html" style="color: var(--primary-blue); text-decoration: none; font-weight: 600; padding: 8px 15px; background: rgba(7, 33, 70, 0.05); border-radius: 8px; transition: 0.3s;"><i class="fas fa-home"></i> Inicio</a>
+    </header>
+
+    <section class="hero-corporate">
+        <img src="logo-buap.jpg" alt="Escudo BUAP" class="uni-logo-glow">
+        <h1 class="title-main">El Futuro es Nuestro. (Tu dinero también).</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto;">
+            Somos una institución financiera amigable, moderna y totalmente comprometida con cobrarte comisión hasta por respirar dentro del campus universitario.
+        </p>
+    </section>
+
+    <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+        
+        <div class="history-panel">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <i class="fas fa-book-dead" style="font-size: 2rem; color: var(--action-blue);"></i>
+                <h2 style="font-size: 2rem; color: var(--primary-blue); margin: 0;">Cómo arruinamos vidas</h2>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 5px;">La Triste Realidad (2024)</h3>
+                    <p style="color: var(--text-muted);">
+                        Todo empezó cuando nos dimos cuenta de que las copias estaban muy caras y alguien tenía que capitalizar ese sufrimiento. En lugar de quejarte de no tener dinero para tus proyectos, decidimos crear un banco para prestarte dinero... que luego no podrás pagar. Una idea millonaria.
+                    </p>
+                </div>
+                <div class="timeline-item">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 5px;">Comodidad para llorar (2025)</h3>
+                    <p style="color: var(--text-muted);">
+                        Creamos la app móvil. ¿Por qué hacer fila bajo el sol para ver que tienes $15 pesos de saldo? Ahora puedes sufrir en la comodidad de tu cama o a mitad de una clase de Cálculo Vectorial. La miseria, pero digital.
+                    </p>
+                </div>
+                <div class="timeline-item">
+                    <h3 style="color: var(--action-blue); margin-bottom: 5px;">Dominación Absurda (2026)</h3>
+                    <p style="color: var(--text-muted);">
+                        Próximamente abriremos un cajero dentro del baño de cada facultad. Porque sabemos que ahí pasas la mayor parte de tu tiempo cuestionando tus decisiones de vida. Retira dinero mientras lloras.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 80px;">
+            <h2 style="font-size: 2.5rem; color: var(--primary-blue);">Los Culpables</h2>
+            <p style="color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem;">No confíes en ellos, tienen cara de que te van a embargar.</p>
+        </div>
+
+        <div class="founders-grid">
+            
+            <div class="founder-card">
+                <div class="founder-img-wrapper">
+                    <a href="https://www.instagram.com/norbert.arii/" target="_blank" title="Visitar Instagram de Ariana">
+                        <img src="foto-ariana.jpg" alt="Ariana Pérez Vázquez" class="founder-img">
+                    </a>
+                </div>
+                
+                <h3 style="color: var(--primary-blue); font-size: 1.5rem; margin-bottom: 5px;">Ariana Pérez Vázquez</h3>
+                <span class="founder-role"><i class="fas fa-mask"></i> Cofundadora & CEO (Cobra En Oculto)</span>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-top: 15px;">
+                    Mente maestra detrás de las letras chiquitas.  te cae la beca para descontarte una misteriosa "Comisión por desgaste de servidor". Colecciona deudas estudiantiles como si fueran estampitas.
+                </p>
+            </div>
+
+            <div class="founder-card">
+                <div class="founder-img-wrapper">
+                    <a href="https://www.instagram.com/eduarlvvl25/" target="_blank" title="Visitar Instagram de Eduardo">
+                        <img src="foto-eduardo.jpg" alt="Eduardo Vega Vega" class="founder-img">
+                    </a>
+                </div>
+
+                <h3 style="color: var(--primary-blue); font-size: 1.5rem; margin-bottom: 5px;">Eduardo Vega Vega</h3>
+                <span class="founder-role" style="color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1);"><i class="fas fa-hat-wizard"></i> fundador</span>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-top: 15px;">
+                    Visionario corporativo que descubrió que si le pones la palabra "Universitario" a un producto mediocre, puedes cobrar el triple. Creador de la exitosa campaña de marketing: <em>"Te prestamos para tus tacos árabes, nos pagas con tu primogénito".</em>
+                </p>
+            </div>
+
+        </div>
+
+        <div class="mv-grid">
+            <div class="mv-card">
+                <div class="mv-icon"><i class="fas fa-wallet"></i></div>
+                <div>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 5px;">Nuestra "Misión"</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        Quitarte el poco dinero que tienes antes de que te lo gastes en cervezas o yendo a antros dudosos. Alguien tiene que administrar esa beca y obvio, seremos nosotros. Es por tu bien.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mv-card">
+                <div class="mv-icon" style="color: var(--accent-cyan);"><i class="fas fa-crown"></i></div>
+                <div>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 5px;">Nuestra Visión</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        Ser los dueños absolutos de la BUAP para 2030, poner casetas de cobro en los pasillos de las facultades y cobrarte comisión si pisas el pasto de CU.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer style="text-align: center; padding: 40px 20px; border-top: var(--glass-border); margin-top: 50px; background: var(--bg-light);">
+        <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 10px;">LoboBuap <span style="color: var(--action-blue);">Inc.</span></div>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">© 2026. Al leer este pie de página nos debes $50 pesos.</p>
+    </footer>
+
+</body>
+</html>

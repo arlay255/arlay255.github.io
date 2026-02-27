@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Seguro | LoboBuap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #072146;
+            --neon-aqua: #2DCCCD;
+            --accent-pink: #ff007f;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --frame-color: rgba(45, 204, 205, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            user-select: none; /* Evita selección de texto al picar rápido */
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(7, 33, 70) 90%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Elementos decorativos de fondo */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 10s infinite ease-in-out;
+        }
+        .orb-1 { width: 300px; height: 300px; background: var(--deep-blue); top: -50px; left: -50px; }
+        .orb-2 { width: 200px; height: 200px; background: var(--neon-aqua); bottom: 10%; right: 10%; opacity: 0.4; animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* --- CONTENEDOR PRINCIPAL (EL MARCO MAYOR) --- */
+        .atm-interface {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(12, 20, 35, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 0 0 1px rgba(0,0,0,0.5), /* Borde interno oscuro */
+                0 20px 50px rgba(0,0,0,0.5), /* Sombra profunda */
+                0 0 20px rgba(45, 204, 205, 0.1); /* Resplandor aqua */
+        }
+
+        /* Cabecera */
+        .atm-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--frame-color);
+            padding-bottom: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+        .logo span { color: var(--neon-aqua); }
+
+        .secure-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(45, 204, 205, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--neon-aqua);
+            margin-top: 5px;
+            border: 1px solid var(--frame-color);
+        }
+
+        /* --- DISPLAY (PANTALLA) --- */
+        .display-frame {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 5px; /* Marco externo */
+            border: 1px solid var(--glass-border);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            margin-bottom: 30px;
+        }
+
+        .display-screen {
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background: radial-gradient(circle, #1a2a40 0%, #050a14 100%);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Línea de escaneo decorativa */
+        .scan-line {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--neon-aqua);
+            opacity: 0.5;
+            animation: scan 3s infinite linear;
+            box-shadow: 0 0 10px var(--neon-aqua);
+        }
+        @keyframes scan { 0% {top:0} 100% {top:100%} }
+
+        .dot {
+            width: 15px; height: 15px;
+            background: transparent;
+            border: 2px solid var(--neon-aqua);
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        .dot.active { background: var(--neon-aqua); box-shadow: 0 0 10px var(--neon-aqua); }
+
+        /* --- TECLADO (GRID) --- */
+        .keypad-frame {
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .keypad-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .key-btn {
+            height: 65px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efecto al presionar */
+        .key-btn:active {
+            transform: scale(0.95);
+            background: var(--neon-aqua);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-aqua);
+            border-color: transparent;
+        }
+
+        .key-btn i { font-size: 1.2rem; }
+
+        /* Botón especial (Huella) */
+        .key-action {
+            background: rgba(45, 204, 205, 0.1);
+            border-color: rgba(45, 204, 205, 0.3);
+            color: var(--neon-aqua);
+        }
+
+        /* Botón especial (Borrar) */
+        .key-delete {
+            background: rgba(255, 0, 127, 0.1);
+            border-color: rgba(255, 0, 127, 0.3);
+            color: var(--accent-pink);
+        }
+
+        /* --- TOAST NOTIFICATIONS (La parte graciosa) --- */
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 90%;
+            max-width: 400px;
+            pointer-events: none; /* Click through */
+        }
+
+        .toast {
+            background: rgba(12, 20, 35, 0.95);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--neon-aqua);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            font-size: 0.95rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .toast i { font-size: 1.2rem; color: var(--neon-aqua); }
+        
+        .toast.error { border-left-color: var(--accent-pink); }
+        .toast.error i { color: var(--accent-pink); }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div id="toast-container"></div>
+
+    <div class="atm-interface">
+        
+        <div class="atm-header">
+            <div class="logo">Lobo<span>Buap</span></div>
+            <div class="secure-badge">
+                <i class="fas fa-lock"></i> Conexión Cifrada (O eso creemos)
+            </div>
+        </div>
+
+        <div class="display-frame">
+            <div class="display-screen">
+                <div class="scan-line"></div>
+                <div class="dot" id="d1"></div>
+                <div class="dot" id="d2"></div>
+                <div class="dot" id="d3"></div>
+                <div class="dot" id="d4"></div>
+            </div>
+        </div>
+
+        <div class="keypad-frame">
+            <div class="keypad-grid">
+                <button class="key-btn" onclick="pressKey('1')">1</button>
+                <button class="key-btn" onclick="pressKey('2')">2</button>
+                <button class="key-btn" onclick="pressKey('3')">3</button>
+                <button class="key-btn" onclick="pressKey('4')">4</button>
+                <button class="key-btn" onclick="pressKey('5')">5</button>
+                <button class="key-btn" onclick="pressKey('6')">6</button>
+                <button class="key-btn" onclick="pressKey('7')">7</button>
+                <button class="key-btn" onclick="pressKey('8')">8</button>
+                <button class="key-btn" onclick="pressKey('9')">9</button>
+                
+                <button class="key-btn key-action" onclick="pressKey('action')">
+                    <i class="fas fa-fingerprint"></i>
+                </button>
+                <button class="key-btn" onclick="pressKey('0')">0</button>
+                <button class="key-btn key-delete" onclick="pressKey('delete')">
+                    <i class="fas fa-backspace"></i>
+                </button>
+            </div>
+        </div>
+        
+        <p style="text-align: center; color: rgba(255,255,255,0.4); margin-top: 20px; font-size: 0.8rem;">
+            © 2026 LoboBuap Security Systems
+        </p>
+    </div>
+
+    <script>
+        // Mensajes absurdos categorizados
+        const messages = [
+            "Transfiriendo tu deuda a un extraño...",
+            "Saldo insuficiente para ser feliz.",
+            "Detectamos pobreza en tu huella digital.",
+            "Hackeando a la NASA... espera un momento.",
+            "Comprando aire embotellado con tu crédito.",
+            "Impuesto por existir aplicado correctamente.",
+            "Tu contraseña es '1234', ¿verdad?",
+            "Enviando ubicación al SAT...",
+            "Error 404: Tu dinero no se encuentra.",
+            "Activando modo 'Millonario de Monopolio'.",
+            "¿Seguro? Esa tecla se veía sospechosa.",
+            "Donando tus ahorros a 'Gatitos Anónimos'.",
+            "Lo sentimos, el sistema está en su hora de comida.",
+            "Cargando virus... digo, cargando saldo."
+        ];
+
+        const deleteMessages = [
+            "No puedes borrar tus errores del pasado.",
+            "Ese número ya estaba encariñado contigo.",
+            "Borrando... borrando... ¡Se borró todo el internet!",
+            "Ups, borraste la deuda externa de México."
+        ];
+
+        const actionMessages = [
+            "Huella no reconocida (Lávate las manos).",
+            "Escaneando retina... Tienes sueño, ve a dormir.",
+            "Identidad confirmada: Eres pobre.",
+            "Acceso denegado por falta de estilo."
+        ];
+
+        // Lógica del teclado
+        let dotCount = 0;
+        const maxDots = 4;
+
+        function pressKey(key) {
+            // Efecto visual en los puntos
+            if (key === 'delete') {
+                if (dotCount > 0) {
+                    document.getElementById(`d${dotCount}`).classList.remove('active');
+                    dotCount--;
+                }
+                showRandomToast(deleteMessages, true);
+            } else if (key === 'action') {
+                showRandomToast(actionMessages, false);
+            } else {
+                // Es un número
+                if (dotCount < maxDots) {
+                    dotCount++;
+                    document.getElementById(`d${dotCount}`).classList.add('active');
+                } else {
+                    // Resetear si ya está lleno
+                    resetDots();
+                }
+                showRandomToast(messages, false);
+            }
+        }
+
+        function resetDots() {
+            for(let i=1; i<=maxDots; i++) {
+                document.getElementById(`d${i}`).classList.remove('active');
+            }
+            dotCount = 0;
+        }
+
+        // Sistema de Notificaciones (Toasts)
+        function showRandomToast(msgArray, isError) {
+            const container = document.getElementById('toast-container');
+            
+            // Elegir mensaje aleatorio
+            const text = msgArray[Math.floor(Math.random() * msgArray.length)];
+            
+            // Crear elemento
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            
+            const icon = isError ? '<i class="fas fa-exclamation-circle"></i>' : '<i class="fas fa-info-circle"></i>';
+            
+            toast.innerHTML = `${icon} <span>${text}</span>`;
+            
+            container.appendChild(toast);
+
+            // Eliminar después de 3 segundos
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.5s forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 500);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

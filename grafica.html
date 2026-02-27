@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Financiero | LoboBuap</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta Light Mode Ejecutivo */
+            --bg-light: #f4f6f9;
+            --white: #ffffff;
+            --primary-blue: #042151;   
+            --action-blue: #1973B8;
+            --danger-red: #ef4444;
+            --danger-bg: #fef2f2;
+            --warning-amber: #f59e0b;
+            --text-dark: #1e293b;
+            --text-muted: #6b7280;
+            --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        .main-header {
+            background: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-blue); }
+        .logo span { color: var(--action-blue); font-weight: 300; }
+
+        .btn-back {
+            color: var(--primary-blue); text-decoration: none; font-weight: 600;
+            padding: 8px 15px; background: rgba(4, 33, 81, 0.05);
+            border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+        .btn-back:hover { background: rgba(4, 33, 81, 0.1); }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-size: 2.8rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* --- KPIs (Estadísticas Rápidas) --- */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            border: var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s;
+        }
+
+        .kpi-card:hover { transform: translateY(-5px); }
+
+        .kpi-icon {
+            width: 60px; height: 60px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+        }
+
+        .kpi-info h4 { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .kpi-info .value { font-size: 1.6rem; font-weight: 800; color: var(--primary-blue); }
+        .kpi-info .sub-text { font-size: 0.8rem; color: var(--danger-red); font-weight: 600; margin-top: 5px; display: block; }
+
+        /* --- GRÁFICA PRINCIPAL CENTRADA --- */
+        .main-chart-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            border: var(--glass-border);
+            margin-bottom: 40px;
+            text-align: center;
+            /* Efecto rojo en el borde inferior para enfatizar la caída */
+            border-bottom: 5px solid var(--danger-red);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 15px;
+        }
+
+        .chart-header h2 { color: var(--primary-blue); font-size: 1.5rem; }
+        
+        .status-badge {
+            background: var(--danger-bg); color: var(--danger-red);
+            padding: 6px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            height: 450px; /* Gráfica más alta */
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* --- GRÁFICA SECUNDARIA Y BOTÓN --- */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .side-panel {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            border: var(--glass-border);
+        }
+
+        .side-panel h3 { color: var(--primary-blue); margin-bottom: 20px; text-align: center; }
+
+        .doughnut-wrapper {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .action-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .btn-panic {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(4, 33, 81, 0.15);
+            margin-bottom: 15px;
+        }
+
+        .btn-panic:hover {
+            background: var(--danger-red);
+            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Efecto de "Rotura" */
+        .cracked-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background: url('https://pngimg.com/uploads/broken_glass/broken_glass_PNG27.png') no-repeat center center/cover;
+            opacity: 0;
+            transition: opacity 0.1s;
+            z-index: 9999;
+        }
+
+        @media (max-width: 900px) {
+            .bottom-grid { grid-template-columns: 1fr; }
+            .canvas-wrapper { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cracked-screen" id="crack-effect"></div>
+
+    <header class="main-header">
+        <div class="logo">LoboBuap <span>| Analytics</span></div>
+        <a href="dashboard.html" class="btn-back"><i class="fas fa-arrow-left"></i> Volver al Resumen</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="page-title">
+            <h1>Proyección de Ruina Financiera</h1>
+            <p>Análisis predictivo de tu capital basado en algoritmos de inteligencia artificial (y tus tickets del OXXO).</p>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger-red);">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="kpi-info">
+                    <h4>Rendimiento Neto</h4>
+                    <div class="value" style="color: var(--danger-red);">-$420.69</div>
+                    <span class="sub-text"><i class="fas fa-arrow-down"></i> -45% vs mes anterior</span>
+                </div>
+            </div>
+            
+            <div class="kpi-card">
+                <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning-amber);">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="kpi-info">
+                    <h4>Tasa de Interés Moral</h4>
+                    <div class="value">400.0%</div>
+                    <span class="sub-text" style="color: var(--warning-amber);">Variable según tu desesperación</span>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon" style="background: rgba(25, 115, 184, 0.1); color: var(--action-blue);">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div class="kpi-info">
+                    <h4>Probabilidad de Embargo</h4>
+                    <div class="value">99.9%</div>
+                    <span class="sub-text" style="color: var(--text-muted);">Empaca tus cosas.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-chart-container" id="chart-box">
+            <div class="chart-header">
+                <h2>Comportamiento Histórico de tu Dignidad</h2>
+                <div class="status-badge"><i class="fas fa-exclamation-triangle"></i> Caída Libre</div>
+            </div>
+            
+            <div class="canvas-wrapper">
+                <canvas id="debtChart"></canvas>
+            </div>
+        </div>
+
+        <div class="bottom-grid">
+            
+            <div class="side-panel">
+                <h3>Distribución de tu Deuda</h3>
+                <div class="doughnut-wrapper">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 15px;">
+                    *El 5% de "Otros" corresponde a chicles para el estrés.
+                </p>
+            </div>
+
+            <div class="side-panel action-panel">
+                <h3>Opciones de Rescate Corporativo</h3>
+                <p style="color: var(--text-muted); margin-bottom: 25px; line-height: 1.6;">
+                    Nuestro sistema ha detectado que tus finanzas son irrecuperables por métodos tradicionales. Puedes solicitar una reestructuración de deuda, pero el algoritmo podría colapsar al intentarlo.
+                </p>
+                <button class="btn-panic" onclick="romperPantalla()" id="panicBtn">
+                    <i class="fas fa-sync-alt"></i> Reestructurar Deuda Mágicamente
+                </button>
+                <span style="font-size: 0.8rem; color: var(--danger-red); font-weight: 600;">
+                    *ADVERTENCIA: Presionar este botón anulará tu garantía y tu voluntad.
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // CONFIGURACIÓN GRÁFICA PRINCIPAL (Línea en Picada)
+        const ctxLine = document.getElementById('debtChart').getContext('2d');
+        
+        // Gradiente rojo suave (estilo corporativo)
+        const gradientLine = ctxLine.createLinearGradient(0, 0, 0, 450);
+        gradientLine.addColorStop(0, 'rgba(239, 68, 68, 0.4)');
+        gradientLine.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['Enero (Beca)', 'Feb (Gastos Locos)', 'Marzo (Crisis)', 'Abril (Micro-préstamos)', 'Mayo (Pánico)', 'Junio (Subsuelo)', 'Futuro (Embargo)'],
+                datasets: [{
+                    label: 'Liquidez Estudiantil',
+                    data: [1500, 200, -500, -1200, -4500, -8000, -25000],
+                    borderColor: '#ef4444', 
+                    backgroundColor: gradientLine,
+                    borderWidth: 4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#ef4444',
+                    pointRadius: 6,
+                    pointHoverRadius: 10,
+                    fill: true,
+                    tension: 0.4 
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#042151',
+                        padding: 15,
+                        titleFont: { size: 14, family: 'Poppins' },
+                        bodyFont: { size: 14, family: 'Poppins' }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        ticks: { color: '#6b7280', font: { family: 'Poppins' } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#6b7280', font: { family: 'Poppins' } }
+                    }
+                },
+                animation: { duration: 2500, easing: 'easeOutBounce' }
+            }
+        });
+
+        // CONFIGURACIÓN GRÁFICA SECUNDARIA (Doughnut)
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Fiestas/Alcohol', 'OnlyFans/Suscripciones', 'Comida Chatarra', 'Copias/Escuela', 'Otros'],
+                datasets: [{
+                    data: [45, 30, 15, 5, 5],
+                    backgroundColor: [
+                        '#ef4444', // Fiestas
+                        '#f59e0b', // Suscripciones
+                        '#1973B8', // Comida
+                        '#10b981', // Copias
+                        '#cbd5e1'  // Otros
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { color: '#1e293b', font: { family: 'Poppins', size: 11 }, usePointStyle: true, boxWidth: 8 }
+                    }
+                }
+            }
+        });
+
+        // FUNCIÓN DE BROMA (Pantalla Rota)
+        function romperPantalla() {
+            // Muestra el cristal roto
+            document.getElementById('crack-effect').style.opacity = '1';
+            
+            // Cambia el botón
+            const btn = document.getElementById('panicBtn');
+            btn.innerHTML = "<i class='fas fa-skull'></i> ¡SISTEMA COLAPSADO!";
+            btn.style.background = "#000";
+            
+            // Sacude la gráfica principal
+            const chartBox = document.getElementById('chart-box');
+            chartBox.style.transform = "rotate(-2deg) scale(0.98)";
+            chartBox.style.boxShadow = "0 0 50px rgba(239, 68, 68, 0.5)";
+            chartBox.style.transition = "0.1s";
+            
+            // Animación de temblor
+            let shake = setInterval(() => {
+                let x = Math.random() * 10 - 5;
+                let y = Math.random() * 10 - 5;
+                chartBox.style.transform = `translate(${x}px, ${y}px) rotate(-2deg) scale(0.98)`;
+            }, 50);
+
+            setTimeout(() => {
+                clearInterval(shake);
+                alert("ERROR CRÍTICO: Tus finanzas son tan tóxicas que han destruido el código HTML del servidor. Hemos notificado al Buró de Crédito Intergaláctico.");
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

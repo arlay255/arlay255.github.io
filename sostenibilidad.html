@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sostenibilidad | LoboBuap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta de colores Light Mode */
+            --bg-light: #f1f5f9;
+            --white: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+            
+            /* Colores de acento */
+            --wind-color: #0ea5e9;
+            --mars-color: #ef4444;
+            --eco-green: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(239, 68, 68, 0.02) 0%, transparent 40%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        .main-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: var(--glass-border);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 700; color: #0f172a; }
+        .logo span { color: var(--eco-green); font-weight: 300; }
+
+        .btn-back {
+            color: var(--text-dark); text-decoration: none; font-weight: 600;
+            padding: 8px 15px; background: rgba(0,0,0,0.05);
+            border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+        .btn-back:hover { background: rgba(0,0,0,0.1); }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .title-main {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 50px;
+            background: linear-gradient(to right, #000, var(--eco-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        /* --- TARJETAS GLOBALES (GLASSMORPHISM CLARO) --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 50px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+        }
+
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.06); }
+
+        /* --- 1. ENERGÍA EÓLICA --- */
+        .wind-card {
+            text-align: center;
+            border-top: 4px solid var(--wind-color);
+        }
+        
+        .wind-icon {
+            font-size: 4.5rem;
+            color: var(--wind-color);
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: spinFast 3s linear infinite;
+        }
+
+        @keyframes spinFast { 100% { transform: rotate(360deg); } }
+
+        /* --- 2. PANELES EN MARTE --- */
+        .mars-section {
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid var(--mars-color);
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.05), rgba(255, 255, 255, 0.9));
+        }
+
+        .mars-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 2px solid rgba(239, 68, 68, 0.2);
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: 0.5s;
+        }
+        .mars-section:hover .mars-img { transform: scale(1.02); }
+
+        /* --- 3. TARJETA FURRY --- */
+        .furry-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+            border-top: 4px solid var(--eco-green);
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.05), rgba(255, 255, 255, 0.9));
+        }
+
+        .card-img-wrapper {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            perspective: 1000px;
+        }
+
+        .card-img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            transform: rotateY(-15deg) rotateX(5deg);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .furry-section:hover .card-img {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+            box-shadow: 0 30px 60px rgba(16, 185, 129, 0.2);
+        }
+
+        .tag-useless {
+            background: rgba(239, 68, 68, 0.05);
+            color: var(--mars-color);
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(239, 68, 68, 0.1);
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .feature-list { list-style: none; margin-bottom: 25px; }
+        .feature-list li { margin-bottom: 12px; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+        .feature-list i.fa-times { color: var(--mars-color); background: rgba(239,68,68,0.1); padding: 5px; border-radius: 50%; font-size: 0.7rem; }
+        .feature-list i.fa-check { color: var(--eco-green); background: rgba(16,185,129,0.1); padding: 5px; border-radius: 50%; font-size: 0.7rem; }
+
+        .btn-apply {
+            background: linear-gradient(45deg, #059669, #10b981);
+            color: white; border: none; padding: 15px 30px;
+            border-radius: 12px; font-weight: 700; font-size: 1.1rem;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+        }
+        .btn-apply:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(16, 185, 129, 0.3); }
+
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">LoboBuap <span>| Futuro</span></div>
+        <a href="index.html" class="btn-back"><i class="fas fa-home"></i> Inicio</a>
+    </header>
+
+    <div class="container">
+        <h1 class="title-main">Innovación Absurda</h1>
+
+        <div class="glass-card wind-card">
+            <i class="fas fa-fan wind-icon"></i>
+            <h2 style="color: var(--wind-color); font-size: 2rem; margin-bottom: 15px;">Energía Eólica Universitaria</h2>
+            <p style="font-size: 1.1rem; color: var(--text-muted); max-width: 750px; margin: 0 auto; line-height: 1.8;">
+                Aprovechamos las fuertes corrientes de aire que se generan cuando los estudiantes suspiran al ver que reprobaron.
+                También tenemos turbinas ocultas en los pasillos de CU que giran con la velocidad de los que llegan tarde a su clase de las 7 AM.
+            </p>
+        </div>
+
+        <div class="glass-card mars-section">
+            <div style="position: relative; z-index: 2;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                    <i class="fas fa-satellite-dish" style="color: var(--mars-color); font-size: 2rem;"></i>
+                    <h2 style="color: #4b1d1d; font-size: 2.2rem;">Energía Solar... desde Marte</h2>
+                </div>
+                <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.8;">
+                    ¿Por qué poner paneles en Puebla si en Marte no hay nubes? 
+                    Nuestra granja solar en el Planeta Rojo envía la energía a los cajeros vía <strong style="color: #000;">Bluetooth 5.0 Interplanetario</strong>. 
+                    Cero emisiones, 100% lag en tus transacciones.
+                </p>
+                <img src="paneles-marte.jpg" alt="Paneles Solares en Marte" class="mars-img">
+            </div>
+        </div>
+
+        <div class="glass-card furry-section">
+            <div class="card-img-wrapper">
+                <img src="tarjeta-furry.jpg" alt="Lobo Card Edición Furry" class="card-img">
+            </div>
+            
+            <div style="flex: 1.5;">
+                <span class="tag-useless"><i class="fas fa-ban"></i> Totalmente Inútil</span>
+                <h2 style="color: var(--eco-green); font-size: 2.2rem; margin-bottom: 15px;">LoboCard Edición "Furry"</h2>
+                <p style="margin-bottom: 25px; font-size: 1.05rem; color: var(--text-muted); line-height: 1.6;">
+                    Sabemos que existe una comunidad... "especial" en la universidad. Para ellos, creamos esta pieza maestra de plástico sin valor financiero.
+                </p>
+                
+                <ul class="feature-list">
+                    <li><i class="fas fa-times"></i> No tiene chip inteligente.</li>
+                    <li><i class="fas fa-times"></i> Carece de banda magnética funcional.</li>
+                    <li><i class="fas fa-times"></i> Será rechazada en cualquier OXXO.</li>
+                    <li><i class="fas fa-check"></i> Tiene un lobito estético que combina perfecto con tu fursuit.</li>
+                </ul>
+                
+                <button class="btn-apply" onclick="alert('Tu solicitud ha sido enviada. Te llegará por paquetería (junto con un poco de dignidad).')">
+                    <i class="fas fa-paw"></i> Solicitar Plástico
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer style="text-align: center; padding: 40px; border-top: var(--glass-border); margin-top: 20px; background-color: var(--bg-light);">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026 LoboBuap S.A. | Sostenibilidad de otro planeta</p>
+    </footer>
+</body>
+</html>
